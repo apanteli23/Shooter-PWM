@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.PWMSparkMax;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.Talon;
 
 
 /**
@@ -23,8 +24,10 @@ import edu.wpi.first.wpilibj.Timer;
 public class Robot extends TimedRobot {
   private PWMSparkMax leftMotor = new PWMSparkMax(1);
   private PWMSparkMax rightMotor = new PWMSparkMax(2);
-  private double velocity;
+  private double velocity, intakeVelocity;
   
+  private Talon intakeMotor = new Talon(1);
+
   private final Timer m_timer = new Timer();
 
 
@@ -34,6 +37,7 @@ public class Robot extends TimedRobot {
     leftMotor.setInverted(true);
     
     SmartDashboard.putNumber("Velocity", velocity);
+    SmartDashboard.putNumber("intake velocity", intakeVelocity);
 
   }
 
@@ -56,20 +60,27 @@ public class Robot extends TimedRobot {
     
     //get velocity from SmartDashboard
     double m_velocity = SmartDashboard.getNumber("Velocity", 0);
+    double m_intakeVelocity = SmartDashboard.getNumber("Intake Velocity", 0);
 
     // if velocity coefficients on SmartDashboard have changed, write new values to controller
     if(m_velocity != velocity) { 
-      m_velocity = velocity;
+      velocity = m_velocity;
+    }
+    if(m_intakeVelocity != intakeVelocity) { 
+      intakeVelocity = m_intakeVelocity;
     }
     
     rightMotor.set(velocity);
     leftMotor.set(velocity);
 
+    intakeMotor.set(intakeVelocity);
+
     double rightSpeed = rightMotor.getSpeed();
     double leftSpeed = leftMotor.getSpeed();
+    double intakeSpeed = intakeMotor.getSpeed();
     SmartDashboard.putNumber("Right speed", rightSpeed);
     SmartDashboard.putNumber("Left speed", leftSpeed);
-
+    SmartDashboard.putNumber("Intake speed", intakeSpeed);
   }
 
   @Override
