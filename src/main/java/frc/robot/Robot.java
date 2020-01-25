@@ -72,7 +72,7 @@ public class Robot extends TimedRobot {
     
     rightMotor.set(velocity);
     leftMotor.set(velocity);
-
+ 
     intakeMotor.set(intakeVelocity);
 
     double rightSpeed = rightMotor.getSpeed();
