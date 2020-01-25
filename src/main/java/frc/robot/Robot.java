@@ -7,17 +7,11 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.PWMSparkMax;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.Timer;
 
-
-
-import com.revrobotics.PWMSparkMax;
-import com.revrobotics.CANEncoder;
-import com.revrobotics.CANPIDController;
-import com.revrobotics.ControlType;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -27,8 +21,8 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
  * project.
  */
 public class Robot extends TimedRobot {
-  private PWMSparkMax leftMotor = new PWMSparkMax(1, MotorType.kBrushless);
-  private PWMSparkMax rightMotor = new PWMSparkMax(2, MotorType.kBrushless);
+  private PWMSparkMax leftMotor = new PWMSparkMax(1);
+  private PWMSparkMax rightMotor = new PWMSparkMax(2);
   private double velocity;
   
   private final Timer m_timer = new Timer();
@@ -37,10 +31,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void robotInit() {
-    leftMotor.restoreFactoryDefaults();
-    rightMotor.restoreFactoryDefaults();
     leftMotor.setInverted(true);
-    leftMotor.follow(rightMotor);
     
     SmartDashboard.putNumber("Velocity", velocity);
 
@@ -71,9 +62,14 @@ public class Robot extends TimedRobot {
       m_velocity = velocity;
     }
     
-    double speed = velocity;
-      
-    SmartDashboard.putNumber("CurretVelocity", speed);
+    rightMotor.set(velocity);
+    leftMotor.set(velocity);
+
+    double rightSpeed = rightMotor.getSpeed();
+    double leftSpeed = leftMotor.getSpeed();
+    SmartDashboard.putNumber("Right speed", rightSpeed);
+    SmartDashboard.putNumber("Left speed", leftSpeed);
+
   }
 
   @Override
