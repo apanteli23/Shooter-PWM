@@ -11,7 +11,10 @@ import edu.wpi.first.wpilibj.PWMSparkMax;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.Talon;
+
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+ 
 
 
 /**
@@ -26,7 +29,7 @@ public class Robot extends TimedRobot {
   private PWMSparkMax rightMotor = new PWMSparkMax(2);
   private double velocity, intakeVelocity;
   
-  private Talon intakeMotor = new Talon(1);
+  private TalonSRX intakeMotor = new TalonSRX(1);
 
   private final Timer m_timer = new Timer();
 
@@ -73,14 +76,12 @@ public class Robot extends TimedRobot {
     rightMotor.set(velocity);
     leftMotor.set(velocity);
  
-    intakeMotor.set(intakeVelocity);
+    intakeMotor.set(ControlMode.PercentOutput, intakeVelocity);
 
     double rightSpeed = rightMotor.getSpeed();
     double leftSpeed = leftMotor.getSpeed();
-    double intakeSpeed = intakeMotor.getSpeed();
     SmartDashboard.putNumber("Right speed", rightSpeed);
     SmartDashboard.putNumber("Left speed", leftSpeed);
-    SmartDashboard.putNumber("Intake speed", intakeSpeed);
   }
 
   @Override

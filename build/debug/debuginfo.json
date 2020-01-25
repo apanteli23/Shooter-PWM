@@ -1,5 +1,12 @@
 [
   {
+    "artifact": "frcJava (in project Shooter-PWM)",
+    "target": "roborio",
+    "debugfile": "frcJava_roborio.debugconfig",
+    "project": "Shooter-PWM",
+    "language": "java"
+  },
+  {
     "artifact": "frcJava (in project Test-code-for-subsytems)",
     "target": "roborio",
     "debugfile": "frcJava_roborio.debugconfig",
